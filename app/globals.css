@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-run: var(--run);
+  --color-warn: var(--warn);
+  --color-fail: var(--fail);
+  --font-mono: var(--font-jetbrains);
+}
+
+:root {
+  --background: #0a0f1c;
+  --foreground: #f8fafc;
+  --surface: #101828;
+  --muted: #8b98ad;
+  --line: rgba(148, 163, 184, 0.14);
+  --run: #22c55e;
+  --warn: #f59e0b;
+  --fail: #ef4444;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.glow-run {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--run) 60%, transparent);
+}
+.glow-warn {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--warn) 60%, transparent);
+}
+.glow-fail {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--fail) 60%, transparent);
+}
+
+.pulse-dot {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* subtle scanline texture */
+.scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 2px,
+    rgba(255, 255, 255, 0.012) 2px 4px
+  );
+}
+
+.log-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot {
+    animation: none;
+  }
+}
+
+::selection {
+  background: color-mix(in srgb, var(--run) 25%, transparent);
+}
+:focus-visible {
+  outline: 2px solid var(--run);
+  outline-offset: 2px;
+}
